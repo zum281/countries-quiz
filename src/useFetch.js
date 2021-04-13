@@ -16,7 +16,18 @@ const useFetch = (url) => {
             })
             .then((data) => {
                 setIsPending(false);
-                setData(data);
+
+                let correctData = [];
+                data.forEach((element) => {
+                    if (
+                        element.name != "" &&
+                        element.capital != "" &&
+                        element.flag != ""
+                    )
+                        correctData.push(element);
+                });
+
+                setData(correctData);
                 setError(null);
             })
             .catch((err) => {
