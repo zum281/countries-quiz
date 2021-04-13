@@ -42,6 +42,7 @@ function App() {
                             )}
                             endGame={endGame}
                             answerCorrect={answerCorrect}
+                            qType={Math.floor(Math.random() * 2)}
                         />
                     </div>
                 )}

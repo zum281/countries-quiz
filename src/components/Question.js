@@ -3,11 +3,20 @@ import Answer from "./Answer.js";
 import { getRandomSubarray, shuffle } from "../utils.js";
 import "../sass/Question.scss";
 
-const Question = ({ countries, questionIndex, endGame, answerCorrect }) => {
+const Question = ({
+    countries,
+    questionIndex,
+    endGame,
+    answerCorrect,
+    qType,
+}) => {
     const [question, setQuestion] = useState(countries[questionIndex]);
-    const [correctAnswer, setCorrectAnswer] = useState(null);
+    const [isCorrectAnswer, setIsCorrectAnswer] = useState(null);
     const [answers, setAnswers] = useState([]);
     const [canAnswer, setCanAnswer] = useState(true);
+    const [showCorrect, setShowCorrect] = useState(false);
+    const [questionType, setQuestionType] = useState(qType);
+
     useEffect(() => {
         let x = getRandomSubarray(countries, 3);
         let y = x.map((country) => country.name);
@@ -28,62 +37,74 @@ const Question = ({ countries, questionIndex, endGame, answerCorrect }) => {
         if (canAnswer) {
             if (correct) {
                 answerCorrect();
-                setCorrectAnswer(true);
+                setIsCorrectAnswer(true);
                 endGame(false);
             } else {
-                // evidenzia la risposta corretta
-                // sapere qual è la risposta giusta
-                // let correct_answer = answers.filter((answer) => answer.correct)[0];
-                // console.log(correct_answer);
-                // fai finta di aver cliccato sulla risp corretta, ma solo per il component answer
-                let siblings = e.target.parentNode.childNodes;
-                console.log(siblings);
-
-                //correct_answer.trigger("click");
-                setCorrectAnswer(false);
+                setIsCorrectAnswer(false);
+                setShowCorrect(true);
             }
+
             setCanAnswer(false);
         }
-
-        //NON PUOI SELEZIONARE UN'ALTRA RISPOSTA
     };
     const goToResults = () => {
-        setCorrectAnswer(null);
+        setIsCorrectAnswer(null);
         endGame(true);
     };
     const handleNext = () => {
-        setCorrectAnswer(false);
+        setCanAnswer(true);
+        setShowCorrect(false);
+        setIsCorrectAnswer(false);
+        setQuestionType(Math.floor(Math.random() * 2));
         setQuestion(countries[Math.floor(Math.random() * countries.length)]);
     };
 
     return (
         <div className="question">
-            {/* <div style={{ position: "absolute", top: 150, color: "#fff" }}>
-                <p>{question.name}</p>
-                <p>{question.capital}</p>
-            </div> */}
-            <h4 className="question-title">
-                {question.capital} is the capital of
+            <h4
+                className="question-title"
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: showCorrect ? "center" : "flex-start",
+                    textAlign: showCorrect ? "center" : "left",
+                    marginTop: showCorrect ? "-20px" : "-60px",
+                }}
+            >
+                {questionType ? (
+                    question.capital
+                ) : (
+                    <img className="flag" src={question.flag} alt="flag" />
+                )}
+                {questionType ? " is the capital of" : " is the flag of"}
             </h4>
-            <div className="answers">
-                {answers.map((answer, index) => {
-                    return (
-                        <Answer
-                            key={answer.id}
-                            index={String.fromCharCode(65 + index)}
-                            text={answer.country}
-                            correct={answer.correct}
-                            classes={["answer-container", "default"]}
-                            checkCorrect={(e, correct) =>
-                                checkCorrect(e, answer.correct)
-                            }
-                            canAnswer={canAnswer}
-                        />
-                    );
-                })}
-            </div>
+            {showCorrect && (
+                <div className="answers you-lost">
+                    <p>The correct answer was</p>
+                    <h4 className="correct-answer">{question.name}</h4>
+                </div>
+            )}
+            {!showCorrect && (
+                <div className="answers">
+                    {answers.map((answer, index) => {
+                        return (
+                            <Answer
+                                key={answer.id}
+                                index={String.fromCharCode(65 + index)}
+                                text={answer.country}
+                                correct={answer.correct}
+                                classes={["answer-container", "default"]}
+                                checkCorrect={(e, correct) =>
+                                    checkCorrect(e, answer.correct)
+                                }
+                                canAnswer={canAnswer}
+                            />
+                        );
+                    })}
+                </div>
+            )}
 
-            {correctAnswer && (
+            {isCorrectAnswer && (
                 <div className="btn-container">
                     <button className="next-btn" onClick={handleNext}>
                         Next
@@ -91,10 +112,15 @@ const Question = ({ countries, questionIndex, endGame, answerCorrect }) => {
                 </div>
             )}
 
-            {!correctAnswer && (
-                <div className="btn-container">
+            {!isCorrectAnswer && (
+                <div
+                    className="btn-container"
+                    style={{
+                        justifyContent: showCorrect ? "center" : "flex-end",
+                    }}
+                >
                     <button className="next-btn" onClick={goToResults}>
-                        {correctAnswer == null ? "Restart" : "Results"}
+                        {isCorrectAnswer == null ? "Restart" : "Results"}
                     </button>
                 </div>
             )}
