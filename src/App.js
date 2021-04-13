@@ -9,7 +9,7 @@ function App() {
     const { error, isPending, data: countries } = useFetch(url);
     const [gameOver, setGameOver] = useState(false);
     const [score, setScore] = useState(0);
-
+    const [play, setPlay] = useState(false);
     const resetScore = () => {
         setScore(0);
     };
@@ -25,35 +25,52 @@ function App() {
         <div className="App">
             <main>
                 <h2 className="title">country quiz</h2>
-                {error && <div>{error}</div>}
-                {isPending && <div>Loading...</div>}
-
-                {countries && !gameOver && (
-                    <div className="main-container">
-                        <img
-                            className="illustration"
-                            src={Illustration1}
-                            alt="question illustration"
-                        />
-                        <Question
-                            countries={countries}
-                            questionIndex={Math.floor(
-                                Math.random() * countries.length
-                            )}
-                            endGame={endGame}
-                            answerCorrect={answerCorrect}
-                            qType={Math.floor(Math.random() * 2)}
-                        />
+                {!play && (
+                    <div
+                        className="main-container"
+                        style={{
+                            height: "640px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
+                    >
+                        <button className="btn" onClick={() => setPlay(true)}>
+                            Play
+                        </button>
                     </div>
                 )}
-
-                {countries && gameOver && (
-                    <div className="main-container">
-                        <Results
-                            endGame={endGame}
-                            score={score}
-                            resetScore={resetScore}
-                        />
+                {play && (
+                    <div>
+                        {error && <div>{error}</div>}
+                        {isPending && <div>Loading...</div>}
+                        {countries && !gameOver && (
+                            <div className="main-container">
+                                <img
+                                    className="illustration"
+                                    src={Illustration1}
+                                    alt="question illustration"
+                                />
+                                <Question
+                                    countries={countries}
+                                    questionIndex={Math.floor(
+                                        Math.random() * countries.length
+                                    )}
+                                    endGame={endGame}
+                                    answerCorrect={answerCorrect}
+                                    qType={Math.floor(Math.random() * 2)}
+                                />
+                            </div>
+                        )}
+                        {countries && gameOver && (
+                            <div className="main-container">
+                                <Results
+                                    endGame={endGame}
+                                    score={score}
+                                    resetScore={resetScore}
+                                />
+                            </div>
+                        )}
                     </div>
                 )}
             </main>
