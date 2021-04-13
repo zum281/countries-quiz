@@ -27,12 +27,6 @@
         background-color: transparent;
         border: $border-light;
         color: $text-options;
-        transition: all 0.3s ease;
-        &:hover {
-            border: 2px solid $orange;
-            background-color: $orange;
-            color: #fff;
-        }
     }
 
     &.correct {
@@ -54,6 +48,14 @@
 
         .answer-index {
             margin-right: 53px;
+        }
+        &.default {
+            transition: all 0.3s ease;
+            &:hover {
+                border: 2px solid $orange;
+                background-color: $orange;
+                color: #fff;
+            }
         }
     }
 }
