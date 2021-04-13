@@ -2,22 +2,20 @@
 
 .answer-container {
     cursor: pointer;
-    width: 400px;
+    width: 325px;
     min-height: 56px;
     border-radius: 12px;
     display: flex;
     align-items: center;
     padding-left: 19px;
-
     text-overflow: ellipsis;
-
     margin-bottom: 30px;
 
     .answer-index {
         font-weight: 500;
         font-size: 24px;
         line-height: 36px;
-        margin-right: 53px;
+        margin-right: 23px;
     }
     .answer-text {
         font-weight: 500;
@@ -47,5 +45,15 @@
         border: 2px solid $red;
         background-color: $red;
         color: #fff;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .answer-container {
+        width: 400px;
+
+        .answer-index {
+            margin-right: 53px;
+        }
     }
 }

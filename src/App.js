@@ -57,6 +57,21 @@ function App() {
                     </div>
                 )}
             </main>
+            <footer>
+                <p className="footer-text">
+                    created by{" "}
+                    <a
+                        className="user-link"
+                        href="https://devchallenges.io/portfolio/zum281"
+                    >
+                        zum281
+                    </a>{" "}
+                    -{" "}
+                    <a className="footer-link" href="https://devchallenges.io">
+                        devChallenges.io
+                    </a>
+                </p>
+            </footer>
         </div>
     );
 }
