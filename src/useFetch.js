@@ -20,9 +20,9 @@ const useFetch = (url) => {
                 let correctData = [];
                 data.forEach((element) => {
                     if (
-                        element.name != "" &&
-                        element.capital != "" &&
-                        element.flag != ""
+                        element.name !== "" &&
+                        element.capital !== "" &&
+                        element.flag !== ""
                     )
                         correctData.push(element);
                 });
