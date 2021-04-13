@@ -1,25 +1,63 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import useFetch from "./useFetch.js";
+import Illustration1 from "./assets/illustration1.svg";
+import Question from "./components/Question.js";
+import Results from "./components/Results.js";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const url = "https://restcountries.eu/rest/v2/all?fields=name;capital;flag";
+    const { error, isPending, data: countries } = useFetch(url);
+    const [gameOver, setGameOver] = useState(false);
+    const [score, setScore] = useState(0);
+
+    const resetScore = () => {
+        setScore(0);
+    };
+    const answerCorrect = () => {
+        setScore(score + 1);
+    };
+
+    const endGame = (value) => {
+        setGameOver(value);
+    };
+
+    return (
+        <div className="App">
+            <main>
+                <h2 className="title">country quiz</h2>
+                {error && <div>{error}</div>}
+                {isPending && <div>Loading...</div>}
+
+                {countries && !gameOver && (
+                    <div className="main-container">
+                        <img
+                            className="illustration"
+                            src={Illustration1}
+                            alt="question illustration"
+                        />
+                        <Question
+                            countries={countries}
+                            questionIndex={Math.floor(
+                                Math.random() * countries.length
+                            )}
+                            endGame={endGame}
+                            answerCorrect={answerCorrect}
+                        />
+                    </div>
+                )}
+
+                {countries && gameOver && (
+                    <div className="main-container">
+                        <Results
+                            endGame={endGame}
+                            score={score}
+                            resetScore={resetScore}
+                        />
+                    </div>
+                )}
+            </main>
+        </div>
+    );
 }
 
 export default App;

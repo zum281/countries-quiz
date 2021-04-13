@@ -1,0 +1,51 @@
+@import "variables";
+
+.answer-container {
+    cursor: pointer;
+    width: 400px;
+    min-height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding-left: 19px;
+
+    text-overflow: ellipsis;
+
+    margin-bottom: 30px;
+
+    .answer-index {
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 36px;
+        margin-right: 53px;
+    }
+    .answer-text {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 27px;
+    }
+
+    &.default {
+        background-color: transparent;
+        border: $border-light;
+        color: $text-options;
+        transition: all 0.3s ease;
+        &:hover {
+            border: 2px solid $orange;
+            background-color: $orange;
+            color: #fff;
+        }
+    }
+
+    &.correct {
+        border: 2px solid $green;
+        background-color: $green;
+        color: #fff;
+    }
+
+    &.incorrect {
+        border: 2px solid $red;
+        background-color: $red;
+        color: #fff;
+    }
+}

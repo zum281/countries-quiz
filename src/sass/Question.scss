@@ -1,0 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import "variables";
+
+.question-title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    color: $text;
+    margin-top: -60px;
+    margin-bottom: 32px;
+}
+
+.btn-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 32px;
+    .next-btn {
+        cursor: pointer;
+        background-color: $orange;
+        color: #fff;
+        width: 116px;
+        height: 56px;
+        border: none;
+        outline: none;
+        border-radius: 12px;
+        box-shadow: 0px 2px 4px rgba(252, 168, 47, 0.4);
+        text-align: center;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 27px;
+    }
+}
